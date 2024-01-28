@@ -66,8 +66,9 @@ stages:
     - task: SonarQubePrepare@5
       inputs:
         SonarQube: 'AzureSonarqube716'
-        scannerMode: 'CLI'
-        configMode: 'file'
+        scannerMode: 'MSBuild'
+        projectKey: 'newpipeline_newpipeline_AY1PZfHbfCCtpR09KVYw'
+        projectName: 'AzureWebapp'
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
