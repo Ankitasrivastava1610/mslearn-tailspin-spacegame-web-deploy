@@ -53,6 +53,21 @@ stages:
         command: 'build'
         arguments: '--no-restore --configuration $(buildConfiguration)'
         projects: '**/*.csproj'
+    
+    - task: SonarQubePrepare@5
+      inputs:
+        SonarQube: 'AzureSonarqube716'
+        scannerMode: 'MSBuild'
+        projectKey: 'newpipeline_newpipeline_AY1PZfHbfCCtpR09KVYw'
+        projectName: 'AzureWebapp'
+    
+    - task: SonarQubeAnalyze@5
+      inputs:
+        jdkversion: 'JAVA_HOME_11_X64'
+    
+    - task: SonarQubePublish@5
+      inputs:
+        pollingTimeoutSec: '300'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish the project - $(buildConfiguration)'
@@ -62,13 +77,6 @@ stages:
         publishWebProjects: false
         arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
-        
-    - task: SonarQubePrepare@5
-      inputs:
-        SonarQube: 'AzureSonarqube716'
-        scannerMode: 'MSBuild'
-        projectKey: 'newpipeline_newpipeline_AY1PZfHbfCCtpR09KVYw'
-        projectName: 'AzureWebapp'
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
