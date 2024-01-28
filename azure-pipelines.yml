@@ -82,10 +82,9 @@ stages:
           steps:
           - download: current
             artifact: drop
-          - task: AzureRmWebAppDeployment@4
+          - task: AzureWebApp@1
             inputs:
-             ConnectionType: 'AzureRM'
              azureSubscription: 'Free Trial(2c06a789-aa24-41a6-8487-e8ff539d53f8)'
              appType: 'webApp'
-             WebappName: '$(WebAppNameDev)'
+             appName: '$(WebAppNameDev)'
              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
