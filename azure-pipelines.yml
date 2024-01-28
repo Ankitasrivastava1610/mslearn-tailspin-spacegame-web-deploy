@@ -62,6 +62,12 @@ stages:
         publishWebProjects: false
         arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
+        
+    - task: SonarQubePrepare@5
+      inputs:
+        SonarQube: 'AzureSonarqube716'
+        scannerMode: 'CLI'
+        configMode: 'file'
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
